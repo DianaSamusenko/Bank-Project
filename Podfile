@@ -7,5 +7,8 @@ target 'PhoneVerification' do
 
   # Pods for PhoneVerification
 	pod 'SkyFloatingLabelTextField', '~> 3.0'
+  pod 'Moya'
+  pod 'ObjectMapper'
+  pod 'Kingfisher'
 
 end

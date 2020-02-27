@@ -1,16 +1,36 @@
 PODS:
+  - Alamofire (5.0.2)
+  - Kingfisher (5.13.1):
+    - Kingfisher/Core (= 5.13.1)
+  - Kingfisher/Core (5.13.1)
+  - Moya (14.0.0):
+    - Moya/Core (= 14.0.0)
+  - Moya/Core (14.0.0):
+    - Alamofire (~> 5.0)
+  - ObjectMapper (3.5.1)
   - SkyFloatingLabelTextField (3.8.0)
 
 DEPENDENCIES:
+  - Kingfisher
+  - Moya
+  - ObjectMapper
   - SkyFloatingLabelTextField (~> 3.0)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
+    - Kingfisher
+    - Moya
+    - ObjectMapper
     - SkyFloatingLabelTextField
 
 SPEC CHECKSUMS:
+  Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
+  Kingfisher: f33a848445e33c543620812158dc5d47f6bf90df
+  Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
+  ObjectMapper: 70187b8941977c62ccfb423caf6b50be405cabf0
   SkyFloatingLabelTextField: 5a338412114808e961fe2d14ea2c5452c8b6e4aa
 
-PODFILE CHECKSUM: 9113fdcc2ed9db172cefad7e8b2c652ebf1bc48b
+PODFILE CHECKSUM: aed79c395dbe968bdb8daf414b8c27c10dd12b20
 
 COCOAPODS: 1.8.4
