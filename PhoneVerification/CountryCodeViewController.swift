@@ -10,29 +10,41 @@ import UIKit
 import Moya
 import ObjectMapper
 
-
 class CountryCodeViewController: UIViewController {
     
+//    @IBOutlet weak var mySearchBar: UISearchBar!
+    @IBOutlet weak var tableView: UITableView!
     
     var codeModel: [CodeModel] = []
+    var codeModelTemp: [CodeModel] = []
+    var searchData = [String]()
+    var countryNameArary = [String]()
+    var searching = false
     
-    @IBOutlet weak var tableView: UITableView!
+    
+   let searchController = UISearchController(searchResultsController: nil)
+    
     
     let provider = MoyaProvider<CodeAPI>()
     typealias RequestResult = ((AnyObject?, Error?) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        searchController.searchResultsUpdater = self
+        
         getCodes()
-        print("Hey   \(codeModel.count)")
+        
         
         tableView.register(UINib(nibName: "CountryCodeTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
-//        tableView.separatorStyle = .none
         
-//        cardTableView.delegate = self
+        
+//        tableView.resultsUpdating = self
         tableView.dataSource = self
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        
+        tableView.tableHeaderView = searchController.searchBar
+        //        searchBar.delegate = self
     }
     
     private func getCodes() {
@@ -42,18 +54,20 @@ class CountryCodeViewController: UIViewController {
             case let .success(moyaResponse):
                 do {
                     let response = try result.get()
-                    if response.data.count > 0{
+                    if response.data.count > 0 {
                         let result = try response.mapJSON() as! [[String: Any]]
                         
-                        
                         self.codeModel = Mapper<CodeModel>().mapArray(JSONArray: result)
-                        print(self.codeModel)
-                        
+                        self.codeModelTemp = self.codeModel
+                        //                        print(self.codeModel)
+                        self.makeArary(self.codeModel)
+                        //                        print(self.countryNameArary.count)
+                        //                        print("................\( self.codeModel[0].name)")
                         DispatchQueue.main.async {
                             
                             self.tableView.reloadData()
+                            //                            print(self.countryNameArary)
                         }
-                        
                     }
                 }
                 catch {
@@ -64,36 +78,61 @@ class CountryCodeViewController: UIViewController {
             }
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    func makeArary(_ codeModel: [CodeModel]) {
+        for i in 0..<codeModel.count {
+            self.countryNameArary.append(codeModel[i].name!)
+        }
     }
-    */
-
 }
 
-extension CountryCodeViewController: UITableViewDataSource {
+extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return codeModel.count
+        if searching {
+            return countryNameArary.count
+        } else {
+            return codeModel.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CountryCodeTableViewCell
         
         cell.configureCell(model: codeModel[indexPath.row])
-        
-//        if let double = codeModel[indexPath.row].officialRate {
-//            cell.curOfficialRateLabel.text =  String(describing: double)
-//        } else {
-//            cell.curOfficialRateLabel.text = nil
-//        }
         return cell
     }
+}
+
+
+extension CountryCodeViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        search(searchResult: searchController.searchBar.text!)
+        
+    }
     
-    
+    func search(searchResult: String) {
+        codeModel = codeModelTemp.filter({
+            if(($0.name?.contains(searchResult))!){
+                return true
+                
+            }
+            return false
+        })
+        if searchResult == "" {
+            codeModel = codeModelTemp
+        }
+        //
+        //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        //
+        //    }
+        
+        
+        //
+        //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        //        searchData = countryNameArary.filter({$0.prefix(searchText.count) == searchText})
+        //        searching = true
+        //        tableView.reloadData()
+        //    }
+                tableView.reloadData()
+    }
 }

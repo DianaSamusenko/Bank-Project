@@ -15,74 +15,46 @@ class ViewController: UIViewController {
     @IBOutlet weak var countryCodeTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var phoneNumberTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var smsCodeTextField: SkyFloatingLabelTextField!
-//    @IBOutlet weak var codeView: UIView!
-//    @IBOutlet weak var smsCodeView: UIView!
-//    @IBOutlet weak var phoneNumberView: UIView!
-    
     @IBOutlet weak var sendSMSButton: UIButton!
+    @IBOutlet weak var bottomLabel: UILabel!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //countryCodeTextField.borderStyle = UITextBorderStyle.
+        configureTextField(textField: countryCodeTextField, color: #colorLiteral(red: 0.5176470588, green: 0.5803921569, blue: 0.6039215686, alpha: 1))
+        configureTextField(textField: phoneNumberTextField, color: #colorLiteral(red: 0.5176470588, green: 0.5803921569, blue: 0.6039215686, alpha: 1))
+        configureTextField(textField: smsCodeTextField, color: #colorLiteral(red: 0.8745098039, green: 0.9019607843, blue: 0.9137254902, alpha: 1))
         
-//        countryCodeTextField.layer.backgroundColor = #colorLiteral(red: 0.6980392157, green: 0.7450980392, blue: 0.7647058824, alpha: 1)
-//        phoneNumberTextField.layer.backgroundColor = #colorLiteral(red: 0.6980392157, green: 0.7450980392, blue: 0.7647058824, alpha: 1)
-//        smsCodeTextField.layer.backgroundColor = #colorLiteral(red: 0.6980392157, green: 0.7450980392, blue: 0.7647058824, alpha: 1)
-        
-        
-//        codeView.layer.borderColor = #colorLiteral(red: 0.6980392157, green: 0.7450980392, blue: 0.7647058824, alpha: 1)
-//        smsCodeView.layer.borderColor = #colorLiteral(red: 0.6980392157, green: 0.7450980392, blue: 0.7647058824, alpha: 1)
-//        phoneNumberView.layer.borderColor = #colorLiteral(red: 0.6980392157, green: 0.7450980392, blue: 0.7647058824, alpha: 1)
-        
+//        let attributedString = NSMutableAttributedString.init(string: "Apply UnderLining")
+//        attributedString.addAttribute(.link, value: "https://www.google.com/?client=safari&channel=mac_bm", range: NSRange.init(location: 0, length: attributedString.length))
+//        bottomLabel.attributedText = attributedString
+//        
         configureButtonState(value: false)
-//        sendSMSButton.isEnabled = false
         sendSMSButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         
-        countryCodeTextField.placeholder = "Code"
-        countryCodeTextField.title = "Code"
-        self.view.addSubview(countryCodeTextField)
-        countryCodeTextField.selectedTitleColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
-        countryCodeTextField.selectedLineColor = .white
-        //countryCodeTextField.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-        
-//        countryCodeTextField.iconType = .font
-//        countryCodeTextField.iconFont = UIFont(name: "FontAwesome", size: 15)
-        
-        phoneNumberTextField.placeholder = "Phone Number"
-        phoneNumberTextField.title = "Phone Number"
-        self.view.addSubview(phoneNumberTextField)
-        phoneNumberTextField.selectedTitleColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
-        phoneNumberTextField.selectedLineColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        //phoneNumberTextField.bounds = CGColor(srgbRed: 0.518, green: 0.58, blue: 0.604, alpha: 1) as! CGRect
         phoneNumberTextField.delegate = self
-        
-        smsCodeTextField.placeholder = "SMS Code"
-        smsCodeTextField.title = "SMS Code"
-        self.view.addSubview(smsCodeTextField)
-        smsCodeTextField.lineColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
-        smsCodeTextField.selectedTitleColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
-        smsCodeTextField.selectedLineColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        smsCodeTextField.borderStyle = .roundedRect
-        
-//        let string  = phoneNumberTextField.text
-//        if string?.count == 8 {
-//            sendSMSButton.isEnabled = true
-//            sendSMSButton.backgroundColor = #colorLiteral(red: 0, green: 0.5980514884, blue: 0.9129410386, alpha: 1)
-//        }
-        
-//        if (phoneNumberTextField!.text != nil) {
-//            sendSMSButton.isEnabled = true
-//            sendSMSButton.backgroundColor = #colorLiteral(red: 0, green: 0.5980514884, blue: 0.9129410386, alpha: 1)
-//        }
-        //print(phoneNumberTextField.text)
-        
     }
     
     private func configureButtonState(value: Bool) {
         sendSMSButton.isEnabled = value
-        sendSMSButton.backgroundColor = .red
+        sendSMSButton.backgroundColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
         
+    }
+    
+    func configureTextField(textField: SkyFloatingLabelTextField!, color: CGColor) {
+        textField.borderStyle = .roundedRect
+        textField.layer.borderWidth = 1
+        textField.layer.cornerRadius = 4
+        textField.layer.borderColor = color
+        textField.lineHeight = 0
+        textField.selectedLineHeight = 0
+        self.view.addSubview(textField)
+        textField.selectedTitleColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
     }
 
     @IBAction func sendSMSPressed(_ sender: UIButton) {

@@ -19,30 +19,22 @@ private func JSONResponseDataFormatter(_ data: Data) -> Data {
         let prettyData =  try JSONSerialization.data(withJSONObject: dataAsJSON, options: .prettyPrinted)
         return prettyData
     } catch {
-        return data // fallback to original data if it can't be serialized.
+        return data 
     }
 }
-
-//var accountProvider: MoyaProvider<CodeAPI> {
-//    let authProvider = MoyaProvider<CodeAPI>(plugins: [NetworkLoggerPlugin(verbose: true, responseDataFormatter: JSONResponseDataFormatter), AuthTokenPlugin()])
-//
-//    return authProvider
-//}
 
 extension CodeAPI: TargetType {
     var headers: [String : String]? {
         return ["Content-type": "application/json"]
     }
     
-    var baseURL: URL { return URL(string: "https://04b32hbx0e.execute-api.eu-central-1.amazonaws.com/dev/v1/references/jurisdiction/transferPro/countries")! }
+    var baseURL: URL { return URL(string: "https://04b32hbx0e.execute-api.eu-central-1.amazonaws.com/dev/")!
+    }
     
-//    https://04b32hbx0e.execute-api.eu-central-1.amazonaws.com/dev/v1/references/jurisdiction/UK/countries
-//    https://04b32hbx0e.execute-api.eu-central-1.amazonaws.com/dev/v1/references/jurisdiction/transferPro/countries
     var path: String {
         switch self {
         case .codes:
-            return ""
-          
+            return "v1/references/jurisdiction/transferPro/countries"
         }
     }
     
@@ -55,16 +47,16 @@ extension CodeAPI: TargetType {
     }
     
     public var validationType: ValidationType {
-           switch self {
-           default:
-               return .successCodes
-           }
-       }
+        switch self {
+        default:
+            return .successCodes
+        }
+    }
     
     var task: Task {
         switch self {
         case .codes:
-             return .requestPlain
+            return .requestPlain
         }
     }
 }
