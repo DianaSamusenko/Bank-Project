@@ -10,6 +10,10 @@ import UIKit
 import Moya
 import ObjectMapper
 
+protocol CodeDelegate {
+    func makeCode(model: CodeModel?)
+}
+
 class CountryCodeViewController: UIViewController {
     
 //    @IBOutlet weak var mySearchBar: UISearchBar!
@@ -21,12 +25,19 @@ class CountryCodeViewController: UIViewController {
     var countryNameArary = [String]()
     var searching = false
     
+    var delegate: CodeDelegate?
+    
     
    let searchController = UISearchController(searchResultsController: nil)
     
     
     let provider = MoyaProvider<CodeAPI>()
     typealias RequestResult = ((AnyObject?, Error?) -> Void)?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +72,7 @@ class CountryCodeViewController: UIViewController {
                         self.codeModelTemp = self.codeModel
                         //                        print(self.codeModel)
                         self.makeArary(self.codeModel)
+//                        print(self.codeModel[0].phoneFormats?[0])
                         //                        print(self.countryNameArary.count)
                         //                        print("................\( self.codeModel[0].name)")
                         DispatchQueue.main.async {
@@ -101,6 +113,17 @@ extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate 
         cell.configureCell(model: codeModel[indexPath.row])
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        //let codeModelData = codeModel[indexPath.row]
+        self.delegate?.makeCode(model: codeModel[indexPath.row])
+        self.dismiss(animated: true, completion: nil)
+        tableView.deselectRow(at: indexPath, animated: true)
+//        print(codeModel[indexPath.row].phoneFormats?[0].code)
+    }
+    
 }
 
 
@@ -121,13 +144,10 @@ extension CountryCodeViewController: UISearchResultsUpdating {
         if searchResult == "" {
             codeModel = codeModelTemp
         }
-        //
         //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         //
         //    }
         
-        
-        //
         //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         //        searchData = countryNameArary.filter({$0.prefix(searchText.count) == searchText})
         //        searching = true

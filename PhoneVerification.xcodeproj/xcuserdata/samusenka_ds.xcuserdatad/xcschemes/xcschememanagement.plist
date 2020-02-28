@@ -7,11 +7,7 @@
 		<key>PhoneVerification.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-<<<<<<< HEAD
-			<integer>2</integer>
-=======
 			<integer>6</integer>
->>>>>>> registration_screen_for_first_step
 		</dict>
 	</dict>
 </dict>
