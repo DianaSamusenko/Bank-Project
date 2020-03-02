@@ -8,18 +8,33 @@
 
 import UIKit
 import SkyFloatingLabelTextField
+import InputMask
+import MessageUI
 
-
-class ViewController: UIViewController {
+class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessageComposeViewControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
 
     @IBOutlet weak var countryCodeTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var phoneNumberTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var smsCodeTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var sendSMSButton: UIButton!
     @IBOutlet weak var bottomLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
     
     var code: String?
     var imageURLString: String?
+    var maskedDelegate: MaskedTextFieldDelegate!
+    
+    var seconds = 60
+    var timer = Timer()
+    var isTimerRunning = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,6 +43,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        maskedDelegate = MaskedTextFieldDelegate()
+        maskedDelegate.listener = self
+        phoneNumberTextField.delegate = maskedDelegate
+        maskedDelegate.put(text: "{(}[000]{)}[000]{-}[000]", into: phoneNumberTextField)
+        
         
         makeArrowImage()
         
@@ -42,9 +63,6 @@ class ViewController: UIViewController {
         
         phoneNumberTextField.delegate = self
         
-//        let tapRecognizer = UITapGestureRecognizer()
-//        tapRecognizer.addTarget(self, action: #selector(ViewController.didTapView))
-//        self.view.addGestureRecognizer(tapRecognizer)
         countryCodeTextField.addTarget(self, action: #selector(didTapView), for: .editingDidBegin)
     }
     
@@ -75,21 +93,39 @@ class ViewController: UIViewController {
     }
 
     @IBAction func sendSMSPressed(_ sender: UIButton) {
+        
+        if (MFMessageComposeViewController.canSendText()) {
+            let controller = MFMessageComposeViewController()
+            controller.body = "Message Body"
+            controller.recipients = [countryCodeTextField.text! + phoneNumberTextField.text!]
+            controller.messageComposeDelegate = self
+            self.present(controller, animated: true, completion: nil)
+        } else {
+            print("SMS service is not available")
+        }
+//        configureButtonState(value: true)
+//        sendSMSButton.titleLabel = "Resend SMS"
+//        sendSMSButton.titleLabel = UILabel("Resend SMS")
+//        sendSMSButton.isEnabled = false
+        timer.invalidate()
+//        sendSMSButton.isEnabled = false
+        runTimer()
     }
     
-//    @IBAction func countryCodeTFPressed(_ sender: SkyFloatingLabelTextField) {
-//        let vc = storyboard?.instantiateViewController(withIdentifier: "CountryCodeViewController") as! CountryCodeViewController
-//        navigationController?.pushViewController(vc, animated: true)
-//        vc.delegate = self
-//    }
-
+    func runTimer() {
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(updateTimer)), userInfo: nil, repeats: true)
+        sendSMSButton.isEnabled = true
+    }
+    
+    @objc func updateTimer() {
+        seconds -= 1
+        timerLabel.text = "We sent you secure code. If you did not get it, you can resend it in \(seconds) sec"
+    }
     
     func makeCodeTextField(imageName: String) {
         countryCodeTextField.leftViewMode = UITextField.ViewMode.always
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        
-        //let image = UIImage(named: imageName)
-        //imageView.image = image
         
         let url = URL(string: "https://04b32hbx0e.execute-api.eu-central-1.amazonaws.com/dev/" + imageName)
         
@@ -100,9 +136,6 @@ class ViewController: UIViewController {
         
         countryCodeTextField.leftView = imageContainer
         
-        
-        
-//        imageView.kf.setImage(with: url)
     }
     
     func makeArrowImage() {
@@ -112,7 +145,6 @@ class ViewController: UIViewController {
         imageView.image = image
         countryCodeTextField.rightView = imageView
     }
-    
     
 }
 
@@ -141,13 +173,11 @@ extension ViewController: CodeDelegate {
             
             print(s.mask)
             countryCodeTextField.text = s.code
-//            countryCodeTextField.setico
         }
         imageURLString = imageURl
         makeCodeTextField(imageName: imageURLString!)
         
     }
-    
     
 }
 

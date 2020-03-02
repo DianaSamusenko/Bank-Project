@@ -16,7 +16,6 @@ protocol CodeDelegate {
 
 class CountryCodeViewController: UIViewController {
     
-//    @IBOutlet weak var mySearchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
     var codeModel: [CodeModel] = []
@@ -27,9 +26,7 @@ class CountryCodeViewController: UIViewController {
     
     var delegate: CodeDelegate?
     
-    
-   let searchController = UISearchController(searchResultsController: nil)
-    
+    let searchController = UISearchController(searchResultsController: nil)
     
     let provider = MoyaProvider<CodeAPI>()
     typealias RequestResult = ((AnyObject?, Error?) -> Void)?
@@ -46,16 +43,12 @@ class CountryCodeViewController: UIViewController {
         
         getCodes()
         
-        
         tableView.register(UINib(nibName: "CountryCodeTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         
-        
-//        tableView.resultsUpdating = self
         tableView.dataSource = self
         tableView.delegate = self
         
         tableView.tableHeaderView = searchController.searchBar
-        //        searchBar.delegate = self
     }
     
     private func getCodes() {
@@ -70,11 +63,7 @@ class CountryCodeViewController: UIViewController {
                         
                         self.codeModel = Mapper<CodeModel>().mapArray(JSONArray: result)
                         self.codeModelTemp = self.codeModel
-                        //                        print(self.codeModel)
                         self.makeArary(self.codeModel)
-//                        print(self.codeModel[0].phoneFormats?[0])
-                        //                        print(self.countryNameArary.count)
-                        //                        print("................\( self.codeModel[0].name)")
                         DispatchQueue.main.async {
                             
                             self.tableView.reloadData()
@@ -98,6 +87,8 @@ class CountryCodeViewController: UIViewController {
     }
 }
 
+//MARK: - TableViewDelegate DataSource
+
 extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searching {
@@ -110,18 +101,37 @@ extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CountryCodeTableViewCell
         
+//        cell.accessoryType = codeModel[indexPath.row].selected ? .checkmark : .none
+        
         cell.configureCell(model: codeModel[indexPath.row])
+        cell.accessoryType = codeModel[indexPath.row].selected ? .checkmark : .none
+        
+        if codeModel[indexPath.row].selected == false {
+            cell.accessoryType = .checkmark
+        } else {
+            cell.accessoryType = .none
+        }
+        
+//        tableView.reloadData()
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+            if codeModel[indexPath.row].selected == false {
+                codeModel[indexPath.row].selected = true
+            } else {
+                codeModel[indexPath.row].selected = false
+            }
         
-        //let codeModelData = codeModel[indexPath.row]
+        print(codeModel[indexPath.row].selected)
+        
         self.delegate?.makeCode(model: codeModel[indexPath.row])
         self.dismiss(animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
-//        print(codeModel[indexPath.row].phoneFormats?[0].code)
+        
+        tableView.reloadData()
     }
     
 }
@@ -144,15 +154,6 @@ extension CountryCodeViewController: UISearchResultsUpdating {
         if searchResult == "" {
             codeModel = codeModelTemp
         }
-        //    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        //
-        //    }
-        
-        //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        //        searchData = countryNameArary.filter({$0.prefix(searchText.count) == searchText})
-        //        searching = true
-        //        tableView.reloadData()
-        //    }
-                tableView.reloadData()
+        tableView.reloadData()
     }
 }

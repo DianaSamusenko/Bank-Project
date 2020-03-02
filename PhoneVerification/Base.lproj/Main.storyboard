@@ -156,6 +156,7 @@
                         <outlet property="phoneNumberTextField" destination="iLB-fT-4b3" id="dci-Q7-BUV"/>
                         <outlet property="sendSMSButton" destination="eSw-kh-p94" id="5uZ-D9-Cn8"/>
                         <outlet property="smsCodeTextField" destination="zAq-bi-KDU" id="joK-Jr-XQA"/>
+                        <outlet property="timerLabel" destination="Hmm-Dz-kbD" id="XJg-Q2-Ljs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

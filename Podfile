@@ -10,5 +10,6 @@ target 'PhoneVerification' do
   pod 'Moya'
   pod 'ObjectMapper'
   pod 'Kingfisher'
+  pod 'InputMask'
 
 end

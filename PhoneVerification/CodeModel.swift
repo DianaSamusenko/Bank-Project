@@ -13,6 +13,7 @@ class CodeModel: Mappable {
     var name: String?
     var imageUrl: String?
     var phoneFormats: [PhoneFormats]?
+    var selected: Bool = true
     
     required init?(map: Map) {}
     

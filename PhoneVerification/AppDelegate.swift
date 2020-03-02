@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import SkyFloatingLabelTextField
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
