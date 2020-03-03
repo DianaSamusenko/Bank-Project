@@ -19,6 +19,7 @@
 		A066A29B2406A8C200AA20FA /* CountryCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */; };
 		A066A29C2406A8C200AA20FA /* CountryCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */; };
 		B1DF020D16AF92739195967E /* Pods_PhoneVerification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD07792EDB4B791594DC537 /* Pods_PhoneVerification.framework */; };
+		F40EBADC240E39B100E4FC6A /* smsCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40EBADB240E39B100E4FC6A /* smsCodeModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewCell.swift; sourceTree = "<group>"; };
 		A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryCodeTableViewCell.xib; sourceTree = "<group>"; };
 		D46C0937049EFA4D00EF1BCE /* Pods-PhoneVerification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneVerification.debug.xcconfig"; path = "Target Support Files/Pods-PhoneVerification/Pods-PhoneVerification.debug.xcconfig"; sourceTree = "<group>"; };
+		F40EBADB240E39B100E4FC6A /* smsCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smsCodeModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,14 +85,13 @@
 			children = (
 				A066A27F24064E0D00AA20FA /* AppDelegate.swift */,
 				A066A28124064E0D00AA20FA /* SceneDelegate.swift */,
-				A066A28324064E0D00AA20FA /* ViewController.swift */,
+				F40EBADE240E3A4B00E4FC6A /* Controllers */,
+				F40EBADD240E3A3800E4FC6A /* Model */,
 				A066A28524064E0D00AA20FA /* Main.storyboard */,
 				A066A28824064E1000AA20FA /* Assets.xcassets */,
 				A066A28A24064E1000AA20FA /* LaunchScreen.storyboard */,
 				A066A28D24064E1000AA20FA /* Info.plist */,
-				A066A29324068C7400AA20FA /* CodeModel.swift */,
 				A066A29524069ADA00AA20FA /* CodeAPI.swift */,
-				A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */,
 				A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */,
 				A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */,
 			);
@@ -104,6 +105,24 @@
 				0332F16D238EF9FD0AAFE682 /* Pods-PhoneVerification.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F40EBADD240E3A3800E4FC6A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F40EBADB240E39B100E4FC6A /* smsCodeModel.swift */,
+				A066A29324068C7400AA20FA /* CodeModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F40EBADE240E3A4B00E4FC6A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A066A28324064E0D00AA20FA /* ViewController.swift */,
+				A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +245,7 @@
 				A066A28024064E0D00AA20FA /* AppDelegate.swift in Sources */,
 				A066A2982406A8A900AA20FA /* CountryCodeViewController.swift in Sources */,
 				A066A29424068C7400AA20FA /* CodeModel.swift in Sources */,
+				F40EBADC240E39B100E4FC6A /* smsCodeModel.swift in Sources */,
 				A066A29624069ADA00AA20FA /* CodeAPI.swift in Sources */,
 				A066A28224064E0D00AA20FA /* SceneDelegate.swift in Sources */,
 				A066A29B2406A8C200AA20FA /* CountryCodeTableViewCell.swift in Sources */,

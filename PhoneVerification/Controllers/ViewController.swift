@@ -9,18 +9,10 @@
 import UIKit
 import SkyFloatingLabelTextField
 import InputMask
-import MessageUI
 
-class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessageComposeViewControllerDelegate {
+class ViewController: UIViewController {
     
-    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-    }
-    
-
+    @IBOutlet var listener: MaskedTextFieldDelegate!
     @IBOutlet weak var countryCodeTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var phoneNumberTextField: SkyFloatingLabelTextField!
     @IBOutlet weak var smsCodeTextField: SkyFloatingLabelTextField!
@@ -29,9 +21,8 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
     @IBOutlet weak var timerLabel: UILabel!
     
     var code: String?
+    var mask: String = "(000) 000 00 00"
     var imageURLString: String?
-    var maskedDelegate: MaskedTextFieldDelegate!
-    
     var seconds = 60
     var timer = Timer()
     var isTimerRunning = false
@@ -39,17 +30,28 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        mask = "[" + mask
+        mask = mask.replacingOccurrences(of: "[(", with: "([")
+        mask = mask.replacingOccurrences(of: "-", with: "]-[")
+        mask = mask.replacingOccurrences(of: " ", with: "] [")
+        mask = mask.replacingOccurrences(of: ")", with: "])[")
+        mask = mask.replacingOccurrences(of: "#", with: "0")
+        mask = mask + "]"
+        
+        listener.affineFormats = [mask]
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = false
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        maskedDelegate = MaskedTextFieldDelegate()
-        maskedDelegate.listener = self
-        phoneNumberTextField.delegate = maskedDelegate
-        maskedDelegate.put(text: "{(}[000]{)}[000]{-}[000]", into: phoneNumberTextField)
-        
-        
+         listener.delegate = self
+        phoneNumberTextField.delegate = listener
+       
+        listener.affinityCalculationStrategy = .wholeString
         makeArrowImage()
         
         countryCodeTextField.text = code
@@ -59,10 +61,7 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
         configureTextField(textField: smsCodeTextField, color: #colorLiteral(red: 0.8745098039, green: 0.9019607843, blue: 0.9137254902, alpha: 1))
         
         configureButtonState(value: false)
-        sendSMSButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        
-        phoneNumberTextField.delegate = self
-        
+//        sendSMSButton.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         countryCodeTextField.addTarget(self, action: #selector(didTapView), for: .editingDidBegin)
     }
     
@@ -75,11 +74,13 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
     
     private func configureButtonState(value: Bool) {
         sendSMSButton.isEnabled = value
-        sendSMSButton.backgroundColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
-        
+//        sendSMSButton.backgroundColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
     }
     
     func configureTextField(textField: SkyFloatingLabelTextField!, color: CGColor) {
+        
+        
+        
         textField.titleFormatter = {$0}
         
         textField.borderStyle = .roundedRect
@@ -88,21 +89,11 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
         textField.layer.borderColor = color
         textField.lineHeight = 0
         textField.selectedLineHeight = 0
-        self.view.addSubview(textField)
         textField.selectedTitleColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
     }
 
     @IBAction func sendSMSPressed(_ sender: UIButton) {
-        
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.body = "Message Body"
-            controller.recipients = [countryCodeTextField.text! + phoneNumberTextField.text!]
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        } else {
-            print("SMS service is not available")
-        }
+      
 //        configureButtonState(value: true)
 //        sendSMSButton.titleLabel = "Resend SMS"
 //        sendSMSButton.titleLabel = UILabel("Resend SMS")
@@ -135,7 +126,6 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
         imageContainer.addSubview(imageView)
         
         countryCodeTextField.leftView = imageContainer
-        
     }
     
     func makeArrowImage() {
@@ -145,15 +135,10 @@ class ViewController: UIViewController, MaskedTextFieldDelegateListener, MFMessa
         imageView.image = image
         countryCodeTextField.rightView = imageView
     }
-    
 }
 
 extension ViewController: UITextFieldDelegate {
    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-         
-    }
-    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if phoneNumberTextField.text!.count > 0 {
             configureButtonState(value: true)
@@ -171,13 +156,21 @@ extension ViewController: CodeDelegate {
         var phones: [PhoneFormats] = phoneFormats
         for s in phones {
             
-            print(s.mask)
             countryCodeTextField.text = s.code
+            mask = s.mask ?? "(000) 000 00 00"
         }
         imageURLString = imageURl
         makeCodeTextField(imageName: imageURLString!)
-        
     }
-    
 }
 
+extension ViewController: MaskedTextFieldDelegateListener {
+   
+    open func textField(
+        _ textField: UITextField,
+        didFillMandatoryCharacters complete: Bool,
+        didExtractValue value: String
+    ) {
+        print(value)
+    }
+}
