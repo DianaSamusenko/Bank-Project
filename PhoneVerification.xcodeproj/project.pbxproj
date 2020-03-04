@@ -13,13 +13,16 @@
 		A066A28724064E0D00AA20FA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A066A28524064E0D00AA20FA /* Main.storyboard */; };
 		A066A28924064E1000AA20FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A066A28824064E1000AA20FA /* Assets.xcassets */; };
 		A066A28C24064E1000AA20FA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A066A28A24064E1000AA20FA /* LaunchScreen.storyboard */; };
-		A066A29424068C7400AA20FA /* CodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A29324068C7400AA20FA /* CodeModel.swift */; };
+		A066A29424068C7400AA20FA /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A29324068C7400AA20FA /* CountryModel.swift */; };
 		A066A29624069ADA00AA20FA /* CodeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A29524069ADA00AA20FA /* CodeAPI.swift */; };
 		A066A2982406A8A900AA20FA /* CountryCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */; };
 		A066A29B2406A8C200AA20FA /* CountryCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */; };
 		A066A29C2406A8C200AA20FA /* CountryCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */; };
 		B1DF020D16AF92739195967E /* Pods_PhoneVerification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD07792EDB4B791594DC537 /* Pods_PhoneVerification.framework */; };
-		F40EBADC240E39B100E4FC6A /* smsCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40EBADB240E39B100E4FC6A /* smsCodeModel.swift */; };
+		F40EBADC240E39B100E4FC6A /* SmsCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40EBADB240E39B100E4FC6A /* SmsCodeModel.swift */; };
+		F4C80AF2240FCF5A008C28D7 /* PasswordSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */; };
+		F4C80AF4240FCFC4008C28D7 /* PersonalInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */; };
+		F4C80AF6240FCFEE008C28D7 /* AddressSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,13 +36,16 @@
 		A066A28824064E1000AA20FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A066A28B24064E1000AA20FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A066A28D24064E1000AA20FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A066A29324068C7400AA20FA /* CodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeModel.swift; sourceTree = "<group>"; };
+		A066A29324068C7400AA20FA /* CountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
 		A066A29524069ADA00AA20FA /* CodeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeAPI.swift; sourceTree = "<group>"; };
 		A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeViewController.swift; sourceTree = "<group>"; };
 		A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewCell.swift; sourceTree = "<group>"; };
 		A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryCodeTableViewCell.xib; sourceTree = "<group>"; };
 		D46C0937049EFA4D00EF1BCE /* Pods-PhoneVerification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneVerification.debug.xcconfig"; path = "Target Support Files/Pods-PhoneVerification/Pods-PhoneVerification.debug.xcconfig"; sourceTree = "<group>"; };
-		F40EBADB240E39B100E4FC6A /* smsCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smsCodeModel.swift; sourceTree = "<group>"; };
+		F40EBADB240E39B100E4FC6A /* SmsCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmsCodeModel.swift; sourceTree = "<group>"; };
+		F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSignUpViewController.swift; sourceTree = "<group>"; };
+		F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInformationViewController.swift; sourceTree = "<group>"; };
+		F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSignUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,15 +91,13 @@
 			children = (
 				A066A27F24064E0D00AA20FA /* AppDelegate.swift */,
 				A066A28124064E0D00AA20FA /* SceneDelegate.swift */,
-				F40EBADE240E3A4B00E4FC6A /* Controllers */,
 				F40EBADD240E3A3800E4FC6A /* Model */,
+				F40EBADE240E3A4B00E4FC6A /* Controllers */,
 				A066A28524064E0D00AA20FA /* Main.storyboard */,
 				A066A28824064E1000AA20FA /* Assets.xcassets */,
 				A066A28A24064E1000AA20FA /* LaunchScreen.storyboard */,
 				A066A28D24064E1000AA20FA /* Info.plist */,
 				A066A29524069ADA00AA20FA /* CodeAPI.swift */,
-				A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */,
-				A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */,
 			);
 			path = PhoneVerification;
 			sourceTree = "<group>";
@@ -110,8 +114,8 @@
 		F40EBADD240E3A3800E4FC6A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F40EBADB240E39B100E4FC6A /* smsCodeModel.swift */,
-				A066A29324068C7400AA20FA /* CodeModel.swift */,
+				F40EBADB240E39B100E4FC6A /* SmsCodeModel.swift */,
+				A066A29324068C7400AA20FA /* CountryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -119,10 +123,39 @@
 		F40EBADE240E3A4B00E4FC6A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A066A28324064E0D00AA20FA /* ViewController.swift */,
-				A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */,
+				F4C80AEE240F9191008C28D7 /* PhoneVerification */,
+				F4C80AF0240F91C1008C28D7 /* RegisterUser */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		F4C80AEE240F9191008C28D7 /* PhoneVerification */ = {
+			isa = PBXGroup;
+			children = (
+				A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */,
+				A066A28324064E0D00AA20FA /* ViewController.swift */,
+				F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */,
+				F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */,
+				F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */,
+				F4C80AEF240F91B9008C28D7 /* Cell */,
+			);
+			path = PhoneVerification;
+			sourceTree = "<group>";
+		};
+		F4C80AEF240F91B9008C28D7 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */,
+				A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		F4C80AF0240F91C1008C28D7 /* RegisterUser */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RegisterUser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,9 +276,12 @@
 			files = (
 				A066A28424064E0D00AA20FA /* ViewController.swift in Sources */,
 				A066A28024064E0D00AA20FA /* AppDelegate.swift in Sources */,
+				F4C80AF2240FCF5A008C28D7 /* PasswordSignUpViewController.swift in Sources */,
 				A066A2982406A8A900AA20FA /* CountryCodeViewController.swift in Sources */,
-				A066A29424068C7400AA20FA /* CodeModel.swift in Sources */,
-				F40EBADC240E39B100E4FC6A /* smsCodeModel.swift in Sources */,
+				A066A29424068C7400AA20FA /* CountryModel.swift in Sources */,
+				F4C80AF4240FCFC4008C28D7 /* PersonalInformationViewController.swift in Sources */,
+				F40EBADC240E39B100E4FC6A /* SmsCodeModel.swift in Sources */,
+				F4C80AF6240FCFEE008C28D7 /* AddressSignUpViewController.swift in Sources */,
 				A066A29624069ADA00AA20FA /* CodeAPI.swift in Sources */,
 				A066A28224064E0D00AA20FA /* SceneDelegate.swift in Sources */,
 				A066A29B2406A8C200AA20FA /* CountryCodeTableViewCell.swift in Sources */,

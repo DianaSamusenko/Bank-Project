@@ -10,29 +10,25 @@ import UIKit
 import Moya
 import ObjectMapper
 
-protocol CodeDelegate {
-    func makeCode(model: CodeModel?)
+typealias RequestResult = ((AnyObject?, Error?) -> Void)?
+
+protocol PhoneFormatsCodeDelegate {
+    func makeCode(model: CountryModel?)
 }
 
 class CountryCodeViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    
-    var codeModel: [CodeModel] = []
-    var codeModelTemp: [CodeModel] = []
-    var searchData = [String]()
-    var countryNameArary = [String]()
-    var searching = false
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var delegate: CodeDelegate?
+    var countryModel: [CountryModel] = []
+    var codeModelTemp: [CountryModel] = []
+//    var searchData = [String]()
+    var searching = false
+    
+    var delegate: PhoneFormatsCodeDelegate?
     
     let provider = MoyaProvider<CodeAPI>()
-    typealias RequestResult = ((AnyObject?, Error?) -> Void)?
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,13 +36,16 @@ class CountryCodeViewController: UIViewController {
         searchBar.delegate = self
         
         getCodes()
+        createTableView()
         
+//        definesPresentationContext = true
+    }
+    
+    private func createTableView() {
         tableView.register(UINib(nibName: "CountryCodeTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         
         tableView.dataSource = self
         tableView.delegate = self
-        
-        definesPresentationContext = true
     }
     
     private func getCodes() {
@@ -59,11 +58,10 @@ class CountryCodeViewController: UIViewController {
                     if response.data.count > 0 {
                         let result = try response.mapJSON() as! [[String: Any]]
                         
-                        self.codeModel = Mapper<CodeModel>().mapArray(JSONArray: result)
-                        self.codeModelTemp = self.codeModel
-                        self.makeArary(self.codeModel)
+                        self.countryModel = Mapper<CountryModel>().mapArray(JSONArray: result)
+                        self.codeModelTemp = self.countryModel
+                        
                         DispatchQueue.main.async {
-                            
                             self.tableView.reloadData()
                         }
                     }
@@ -76,28 +74,22 @@ class CountryCodeViewController: UIViewController {
             }
         }
     }
-    
-    func makeArary(_ codeModel: [CodeModel]) {
-        for i in 0..<codeModel.count {
-            self.countryNameArary.append(codeModel[i].name!)
-        }
-    }
 }
 
 //MARK: - TableViewDelegate DataSource
 
 extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return codeModel.count
+        return countryModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CountryCodeTableViewCell
         
-        cell.configureCell(model: codeModel[indexPath.row])
-        cell.accessoryType = codeModel[indexPath.row].selected ? .checkmark : .none
+        cell.configureCell(model: countryModel[indexPath.row])
+        cell.accessoryType = countryModel[indexPath.row].selected ? .checkmark : .none
         
-        if codeModel[indexPath.row].selected == false {
+        if countryModel[indexPath.row].selected == false {
             cell.accessoryType = .checkmark
         } else {
             cell.accessoryType = .none
@@ -108,13 +100,13 @@ extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if codeModel[indexPath.row].selected == false {
-            codeModel[indexPath.row].selected = true
+        if countryModel[indexPath.row].selected == false {
+            countryModel[indexPath.row].selected = true
         } else {
-            codeModel[indexPath.row].selected = false
+            countryModel[indexPath.row].selected = false
         }
         
-        self.delegate?.makeCode(model: codeModel[indexPath.row])
+        self.delegate?.makeCode(model: countryModel[indexPath.row])
         self.dismiss(animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -127,14 +119,14 @@ extension CountryCodeViewController: UITableViewDataSource, UITableViewDelegate 
 
 extension CountryCodeViewController: UISearchBarDelegate {
     func search(searchResult: String) {
-        codeModel = codeModelTemp.filter({
+        countryModel = codeModelTemp.filter({
             if(($0.name?.contains(searchResult))!) || (($0.phoneFormats![0].code?.contains(searchResult))!){
                 return true
             }
             return false
         })
         if searchResult == "" {
-            codeModel = codeModelTemp
+            countryModel = codeModelTemp
         }
         tableView.reloadData()
     }
