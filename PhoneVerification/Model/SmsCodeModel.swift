@@ -1,5 +1,5 @@
 //
-//  smsCodeModel.swift
+//  SmsCodeModel.swift
 //  PhoneVerification
 //
 //  Created by Samusenko Diana on 3/3/20.
@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class smsCodeModel: Mappable {
+class SmsCodeModel: Mappable {
     var hash: String?
     var phoneNumber: String?
     var type: String?
@@ -17,9 +17,9 @@ class smsCodeModel: Mappable {
     required init?(map: Map) {}
     
     func mapping(map: Map) {
-        hash    <- map["hash"]
-        phoneNumber         <- map["phoneNumber"]
-        type      <- map["type"]
+        hash <- map["hash"]
+        phoneNumber <- map["phoneNumber"]
+        type <- map["type"]
     }
 }
 

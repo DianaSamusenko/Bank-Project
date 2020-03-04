@@ -25,7 +25,7 @@ class CountryCodeTableViewCell: UITableViewCell {
 
     }
     
-    func configureCell(model: CodeModel?) {
+    func configureCell(model: CountryModel?) {
         
         guard let model = model else { return }
         let url = URL(string: "https://04b32hbx0e.execute-api.eu-central-1.amazonaws.com/dev/" + model.imageUrl!)
