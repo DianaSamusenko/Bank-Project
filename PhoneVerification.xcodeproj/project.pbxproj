@@ -134,9 +134,6 @@
 			children = (
 				A066A2972406A8A900AA20FA /* CountryCodeViewController.swift */,
 				A066A28324064E0D00AA20FA /* ViewController.swift */,
-				F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */,
-				F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */,
-				F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */,
 				F4C80AEF240F91B9008C28D7 /* Cell */,
 			);
 			path = PhoneVerification;
@@ -154,6 +151,9 @@
 		F4C80AF0240F91C1008C28D7 /* RegisterUser */ = {
 			isa = PBXGroup;
 			children = (
+				F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */,
+				F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */,
+				F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */,
 			);
 			path = RegisterUser;
 			sourceTree = "<group>";

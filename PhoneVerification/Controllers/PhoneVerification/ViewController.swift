@@ -9,6 +9,9 @@
 import UIKit
 import SkyFloatingLabelTextField
 import InputMask
+import Moya
+
+//typealias RequestResult = ((AnyObject?, Error?) -> Void)?
 
 class ViewController: UIViewController {
     
@@ -27,6 +30,8 @@ class ViewController: UIViewController {
     var timer = Timer()
     var isTimerRunning = false
     
+     let provider = MoyaProvider<CodeAPI>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -40,6 +45,21 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    private func getSmsCode() {
+        
+        let countryCode = countryCodeTextField.text ?? ""
+        let phoneNumber = phoneNumberTextField.text ?? ""
+        var fullNumber: String {
+            get {
+                return countryCode + phoneNumber
+            }
+        }
+        
+        provider.request(.smsCodes(hash: "", phoneNumber: fullNumber, type: "SMS")) { result in
+            
+        }
     }
     
     private func createMask() {
@@ -123,13 +143,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func sendSMSPressed(_ sender: UIButton) {
-        //        configureButtonState(value: true)
-        //        sendSMSButton.titleLabel = "Resend SMS"
-        //        sendSMSButton.titleLabel = UILabel("Resend SMS")
-        //        sendSMSButton.isEnabled = false
         timer.invalidate()
-        //        sendSMSButton.isEnabled = false
         runTimer()
+        
+        getSmsCode()
     }
     
     func runTimer() {
@@ -148,19 +165,11 @@ class ViewController: UIViewController {
             phoneNumberTextField.layer.borderColor = #colorLiteral(red: 0.4980392157, green: 0.8588235294, blue: 0.7882352941, alpha: 1)
             smsCodeTextField.layer.borderColor = #colorLiteral(red: 0.4980392157, green: 0.8588235294, blue: 0.7882352941, alpha: 1)
             countryCodeTextField.layer.borderColor = #colorLiteral(red: 0.4980392157, green: 0.8588235294, blue: 0.7882352941, alpha: 1)
-        }
-        
-    }
-    
-    @objc func phoneFormatTextFieldDidChange() {
-        
-        if (phoneNumberTextField.text?.count == maskFirst.count && countryCodeTextField.text != "") {
+        } else if (phoneNumberTextField.text?.count == maskFirst.count && countryCodeTextField.text != "") {
             sendSMSButton.isEnabled = true
             sendSMSButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         }
-        
     }
-    
     
     func makeCodeTextField(imageName: String) {
         countryCodeTextField.leftViewMode = UITextField.ViewMode.always
@@ -198,6 +207,13 @@ extension ViewController: UITextFieldDelegate {
         return true
     }
     
+    func activateSendSms() {
+        if (phoneNumberTextField.text?.count == maskFirst.count && countryCodeTextField.text != "") {
+            sendSMSButton.isEnabled = true
+            sendSMSButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        }
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         
         textField.layer.borderColor = #colorLiteral(red: 0.03529411765, green: 0.5176470588, blue: 0.8901960784, alpha: 1)
@@ -207,7 +223,9 @@ extension ViewController: UITextFieldDelegate {
         
         textField.layer.borderColor = #colorLiteral(red: 0.5176470588, green: 0.5803921569, blue: 0.6039215686, alpha: 1)
         
-        phoneNumberTextField.addTarget(self, action: #selector(phoneFormatTextFieldDidChange), for: .editingChanged)
+        if phoneNumberTextField.endEditing(true) {
+            activateSendSms()
+        }
         smsCodeTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
     }
