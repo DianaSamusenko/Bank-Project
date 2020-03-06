@@ -12,6 +12,7 @@ import Moya
 enum CodeAPI {
     case codes
     case smsCodes(hash: String, phoneNumber: String, type: String)
+    case checkSmsCode(code: String, phoneNumber: String)
 }
 
 private func JSONResponseDataFormatter(_ data: Data) -> Data {
@@ -38,11 +39,20 @@ extension CodeAPI: TargetType {
             return "v1/references/jurisdiction/transferPro/countries"
         case .smsCodes:
             return "v1/signup-processes"
+        case .checkSmsCode:
+            return "v1/signup-processes/ /phone-verifications"
         }
     }
     
     var method: Moya.Method {
-        return .get
+        switch self {
+        case .codes:
+            return .get
+        case .smsCodes:
+            return .post
+        case .checkSmsCode:
+            return .post
+        }
     }
     
     var sampleData: Data {
@@ -61,7 +71,18 @@ extension CodeAPI: TargetType {
         case .codes:
             return .requestPlain
         case let .smsCodes(hash, phoneNumber, type):
-            return .requestParameters(parameters: ["hash": hash, "phoneNumber": phoneNumber, "type": "SMS"], encoding: JSONEncoding.default)
+            var a =
+            [
+                "hash": "",
+                "phoneNumber": phoneNumber,
+                "type": "SMS"]
+            return .requestJSONEncodable(a)
+        case let .checkSmsCode(code, phoneNumber):
+            var a =
+            [
+                "code": code,
+                "phoneNumber": phoneNumber]
+            return .requestJSONEncodable(a)
         }
     }
 }

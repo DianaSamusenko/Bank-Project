@@ -10,6 +10,7 @@ import UIKit
 import SkyFloatingLabelTextField
 import InputMask
 import Moya
+import ObjectMapper
 
 //typealias RequestResult = ((AnyObject?, Error?) -> Void)?
 
@@ -29,6 +30,8 @@ class ViewController: UIViewController {
     var seconds = 60
     var timer = Timer()
     var isTimerRunning = false
+    var getSmsModel: GetSmsModel?
+    var fullNumber: String?
     
      let provider = MoyaProvider<CodeAPI>()
     
@@ -47,18 +50,54 @@ class ViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    private func checkSmsCode() {//(code: String, phoneNumber: String)
+        provider.request(.checkSmsCode(code: smsCodeTextField.text ?? "", phoneNumber: fullNumber ?? "")) {result in
+            
+            switch result {
+            case let .success(moyaResponse):
+                do {
+                    let response = try result.get()
+                    if response.data.count > 0 {
+                        print(moyaResponse.request!)
+                       
+                    }
+                }
+                catch {
+                    print("error")
+                }
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
+            
+        }
+    }
+    
     private func getSmsCode() {
         
         let countryCode = countryCodeTextField.text ?? ""
         let phoneNumber = phoneNumberTextField.text ?? ""
-        var fullNumber: String {
-            get {
-                return countryCode + phoneNumber
-            }
-        }
+        fullNumber = countryCode + phoneNumber
         
-        provider.request(.smsCodes(hash: "", phoneNumber: fullNumber, type: "SMS")) { result in
+        provider.request(.smsCodes(hash: "", phoneNumber: fullNumber ?? "", type: "SMS")) { result in
             
+            switch result {
+            case let .success(moyaResponse):
+                do {
+                    let response = try result.get()
+                    if response.data.count > 0 {
+                        print(moyaResponse.request!)
+                        let result = try response.mapJSON()
+                        
+                        self.getSmsModel = Mapper<GetSmsModel>().map(JSONObject: result)
+                        print(self.getSmsModel?.processId)
+                    }
+                }
+                catch {
+                    print("error")
+                }
+            case let .failure(error):
+                print(error.localizedDescription)
+            }
         }
     }
     
@@ -72,12 +111,9 @@ class ViewController: UIViewController {
         mask = mask.replacingOccurrences(of: "#", with: "0")
         mask = mask + "]"
         
-        print(mask)
-        
         listener.delegate = self
         listener.affinityCalculationStrategy = .wholeString
         listener.affineFormats = [mask]
-        print(mask.count)
     }
     
     @objc func didTapView() {
@@ -165,9 +201,6 @@ class ViewController: UIViewController {
             phoneNumberTextField.layer.borderColor = #colorLiteral(red: 0.4980392157, green: 0.8588235294, blue: 0.7882352941, alpha: 1)
             smsCodeTextField.layer.borderColor = #colorLiteral(red: 0.4980392157, green: 0.8588235294, blue: 0.7882352941, alpha: 1)
             countryCodeTextField.layer.borderColor = #colorLiteral(red: 0.4980392157, green: 0.8588235294, blue: 0.7882352941, alpha: 1)
-        } else if (phoneNumberTextField.text?.count == maskFirst.count && countryCodeTextField.text != "") {
-            sendSMSButton.isEnabled = true
-            sendSMSButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
         }
     }
     

@@ -19,10 +19,10 @@
 		A066A29B2406A8C200AA20FA /* CountryCodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */; };
 		A066A29C2406A8C200AA20FA /* CountryCodeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */; };
 		B1DF020D16AF92739195967E /* Pods_PhoneVerification.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FD07792EDB4B791594DC537 /* Pods_PhoneVerification.framework */; };
-		F40EBADC240E39B100E4FC6A /* SmsCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40EBADB240E39B100E4FC6A /* SmsCodeModel.swift */; };
 		F4C80AF2240FCF5A008C28D7 /* PasswordSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */; };
 		F4C80AF4240FCFC4008C28D7 /* PersonalInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */; };
 		F4C80AF6240FCFEE008C28D7 /* AddressSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */; };
+		F4FB0495241145A300587DD1 /* GetSmsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FB0494241145A300587DD1 /* GetSmsModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,10 +42,10 @@
 		A066A2992406A8C200AA20FA /* CountryCodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCodeTableViewCell.swift; sourceTree = "<group>"; };
 		A066A29A2406A8C200AA20FA /* CountryCodeTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryCodeTableViewCell.xib; sourceTree = "<group>"; };
 		D46C0937049EFA4D00EF1BCE /* Pods-PhoneVerification.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhoneVerification.debug.xcconfig"; path = "Target Support Files/Pods-PhoneVerification/Pods-PhoneVerification.debug.xcconfig"; sourceTree = "<group>"; };
-		F40EBADB240E39B100E4FC6A /* SmsCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmsCodeModel.swift; sourceTree = "<group>"; };
 		F4C80AF1240FCF5A008C28D7 /* PasswordSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordSignUpViewController.swift; sourceTree = "<group>"; };
 		F4C80AF3240FCFC4008C28D7 /* PersonalInformationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInformationViewController.swift; sourceTree = "<group>"; };
 		F4C80AF5240FCFEE008C28D7 /* AddressSignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSignUpViewController.swift; sourceTree = "<group>"; };
+		F4FB0494241145A300587DD1 /* GetSmsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetSmsModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,8 +114,8 @@
 		F40EBADD240E3A3800E4FC6A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F40EBADB240E39B100E4FC6A /* SmsCodeModel.swift */,
 				A066A29324068C7400AA20FA /* CountryModel.swift */,
+				F4FB0494241145A300587DD1 /* GetSmsModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -278,9 +278,9 @@
 				A066A28024064E0D00AA20FA /* AppDelegate.swift in Sources */,
 				F4C80AF2240FCF5A008C28D7 /* PasswordSignUpViewController.swift in Sources */,
 				A066A2982406A8A900AA20FA /* CountryCodeViewController.swift in Sources */,
+				F4FB0495241145A300587DD1 /* GetSmsModel.swift in Sources */,
 				A066A29424068C7400AA20FA /* CountryModel.swift in Sources */,
 				F4C80AF4240FCFC4008C28D7 /* PersonalInformationViewController.swift in Sources */,
-				F40EBADC240E39B100E4FC6A /* SmsCodeModel.swift in Sources */,
 				F4C80AF6240FCFEE008C28D7 /* AddressSignUpViewController.swift in Sources */,
 				A066A29624069ADA00AA20FA /* CodeAPI.swift in Sources */,
 				A066A28224064E0D00AA20FA /* SceneDelegate.swift in Sources */,

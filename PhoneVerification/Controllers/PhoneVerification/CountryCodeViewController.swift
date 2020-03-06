@@ -23,7 +23,6 @@ class CountryCodeViewController: UIViewController {
     
     var countryModel: [CountryModel] = []
     var codeModelTemp: [CountryModel] = []
-//    var searchData = [String]()
     var searching = false
     
     var delegate: PhoneFormatsCodeDelegate?
@@ -37,8 +36,6 @@ class CountryCodeViewController: UIViewController {
         
         getCodes()
         createTableView()
-        
-//        definesPresentationContext = true
     }
     
     private func createTableView() {
